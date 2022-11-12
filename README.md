@@ -7,6 +7,8 @@
     - npm install sass
   - storybook インストール
     - npm install @storybook/vue3
+  - vue-router インストール
+    - npm install vue-router@4
 
 - コーディングルール
     - 命名規則
