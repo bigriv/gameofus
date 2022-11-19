@@ -2,7 +2,7 @@
   <GameFrame />
   <GameButton label="ボタン" />
   <MessageFrame :messages="message" />
-  <GameCharacter :unit="character.unit" :character="character" />
+  <GameCharacterDrawer :unit="character.unit" :character="character" />
 </template>
 
 <script>
@@ -10,14 +10,14 @@ import { defineComponent } from "vue";
 import GameFrame from "/src/components/atoms/GameFrame.vue";
 import GameButton from "/src/components/atoms/GameButton.vue";
 import MessageFrame from "/src/components/atoms/MessageFrame.vue";
-import GameCharacter from "/src/components/atoms/GameCharacter.vue";
+import GameCharacterDrawer from "/src/components/atoms/GameCharacterDrawer.vue";
 
 export default defineComponent({
   components: {
     GameFrame,
     GameButton,
     MessageFrame,
-    GameCharacter,
+    GameCharacterDrawer,
   },
   setup() {
     const message = ["あいうえお", "123567890", "abcdefg"];
