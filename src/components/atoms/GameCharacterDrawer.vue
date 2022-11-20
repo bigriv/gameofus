@@ -1,22 +1,34 @@
 <template>
   <div class="character-wrap" :style="drawer.variabe">
     <div class="head" :style="drawer.character.head">
-      <div class="hair" :class="drawer.character.hair" />
-      <div class="face" :class="drawer.character.face" />
+      <div
+        class="hair"
+        :class="drawer.character.hair"
+        :style="drawer.character.hair?.other"
+      />
+      <div
+        class="face"
+        :class="drawer.character.face"
+        :style="drawer.character.face?.other"
+      />
+      <slot name="head-option" />
     </div>
     <div class="upper_body" :style="drawer.character.upper_body">
       <div class="arm" :style="drawer.character.arm" />
       <div class="hand" :style="drawer.character.hand" />
+      <slot name="upper_body-option" />
     </div>
     <div class="lower_body" :style="drawer.character.lower_body">
       <div class="leg" :style="drawer.character.leg" />
       <div class="foot" :style="drawer.character.foot" />
+      <slot name="lower_body-option" />
     </div>
     <div
-      v-for="(option, index) in drawer.options"
+      v-for="(option, index) in drawer.character.options"
       :key="index"
       :style="option"
     />
+    <slot name="other-option" />
   </div>
 </template>
 
@@ -69,8 +81,8 @@ export default defineComponent({
       },
       character: {
         head: props.character.head?.other,
-        face: props.character.face, // type only
-        hair: props.character.hair, // type only
+        face: props.character.face,
+        hair: props.character.hair,
         upper_body: props.character.upper_body?.other,
         arm: props.character.arm?.other,
         hand: props.character.hand?.other,

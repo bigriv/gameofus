@@ -1,25 +1,28 @@
 <template>
   <div class="message_frame">
     <div class="messages">
-      <div
-        v-for="(text, index) in typeWriter.texts"
-        :key="index"
-        class="text"
-        :class="{
-          'message-end': messages[index].length == typeWriter.texts[index].length,
-        }"
-      >
-        {{ text }}
-      </div>
+      <slot>
+        <div
+          v-for="(text, index) in typeWriter.texts"
+          :key="index"
+          class="text"
+          :class="{
+            'message-end':
+              messages[index].length == typeWriter.texts[index].length,
+          }"
+        >
+          {{ text }}
+        </div>
+      </slot>
     </div>
   </div>
-  {{ typeWriter.texts }}
 </template>
 
 <script>
 import { defineComponent, onMounted, reactive, watch } from "vue";
 
 export default defineComponent({
+  name: "MessageFrame",
   props: {
     messages: {
       type: Array,
@@ -41,6 +44,9 @@ export default defineComponent({
     };
     const animateTypeWrite = () => {
       removeInterval();
+      if (!props.messages?.length) {
+        return;
+      }
       typeWriter.texts = [];
       typeWriter.timerId = setInterval(() => {
         console.log("setText", typeWriter.col, typeWriter.pos);
@@ -77,13 +83,15 @@ export default defineComponent({
 .message_frame {
   width: 100%;
   height: 100%;
-  background-color: #fff;
+  background-color:  rgba(255, 255, 255, 0.8);
   border: 2rem solid #000;
   border-radius: 2rem;
   padding: 2rem;
   font-size: 16rem;
   .messages {
-    background-color: rgba(70, 130, 180, 0.6);
+    width: 100%;
+    height: 100%;
+    background-color: rgba(70, 130, 180, 0.9);
     border: 2rem solid #000;
     border-radius: 2rem;
     padding: 8rem;

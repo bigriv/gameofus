@@ -1,13 +1,20 @@
 <template>
-  <div class="frame" :style="styles">
+  <div
+    class="frame"
+    :class="{ scroll: !!scroll, 'scroll-stop': scroll?.stop }"
+    :style="styles"
+  >
     <slot />
   </div>
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import { computed } from "@vue/reactivity";
+import { defineComponent, watch } from "vue";
+import { IMAGE_ROOT_PATH } from "/src/composables/utils/const";
 
 export default defineComponent({
+  name: "GameFrame",
   props: {
     width: {
       type: String,
@@ -19,7 +26,7 @@ export default defineComponent({
     },
     bgimg: {
       type: String,
-      default: "/src/assets/vue.svg",
+      default: "vue.svg",
     },
     bgcolor: {
       type: String,
@@ -29,15 +36,23 @@ export default defineComponent({
       type: String,
       default: "#000",
     },
+    scroll: {
+      type: Object,
+      default: null,
+    },
   },
   setup(props) {
-    const styles = {
-      "--width": props.width,
-      "--height": props.height,
-      "--bgcolor": props.bgcolor,
-      "--brcolor": props.brcolor,
-      "background-image": `url(${props.bgimg}`,
-    };
+    const styles = computed(() => {
+      return {
+        "--width": props.width,
+        "--height": props.height,
+        "--bgcolor": props.bgcolor,
+        "--brcolor": props.brcolor,
+        "background-image": `url(${IMAGE_ROOT_PATH + props.bgimg}`,
+        "--scroll_direction": props.scroll?.direction,
+        "--scroll_speed": props.scroll?.speed,
+      };
+    });
 
     return {
       styles,
@@ -49,25 +64,26 @@ export default defineComponent({
 <style scoped lang="scss">
 .frame {
   position: relative;
-  padding: 12rem;
-  border-width: 8rem;
-  border-style: solid;
+  border-width: 16rem;
+  border-style: double;
   border-color: var(--brcolor);
   width: var(--width);
   height: var(--height);
   background-color: var(--bgcolor);
   background-size: 100%;
   background-repeat: no-repeat;
-  &::before {
-    content: "";
-    position: absolute;
-    top: 4rem;
-    left: 4rem;
-    width: calc(100% - 24rem);
-    height: calc(100% - 24rem);
-    border-width: 8rem;
-    border-style: solid;
-    border-color: var(--brcolor);
+  &.scroll {
+    background-size: 200%;
+    animation: animation-scroll var(--scroll_speed) linear infinite;
+    background-position: 100% 0%;
+    &.scroll-stop {
+      animation-play-state: paused;
+    }
+  }
+  @keyframes animation-scroll {
+    100% {
+      background-position: 0% 0%;
+    }
   }
 }
 </style>

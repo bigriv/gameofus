@@ -10,6 +10,7 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
+  name: "GameButton",
   props: {
     label: {
       type: String,
@@ -32,7 +33,7 @@ export default defineComponent({
     },
   },
   emits: ["click"],
-  setup(props) {
+  setup(props, { emit }) {
     const styles = {
       "--color": props.color,
     };
@@ -51,7 +52,7 @@ export default defineComponent({
 <style scoped lang="scss">
 .game_button {
   width: 100%;
-  height: 36rem;
+  height: 100%;
   button {
     cursor: pointer;
     width: 100%;
