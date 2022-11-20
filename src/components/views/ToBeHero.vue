@@ -1,5 +1,5 @@
 <template>
-  <Title v-if="state.currentPage == PAGES.TITLE" />
+  <Title v-if="state.currentPage == PAGES.TITLE" @start="onMoveTop" />
   <Top v-else-if="state.currentPage == PAGES.TOP" @move="onMove" />
   <Patrol v-else-if="state.currentPage == PAGES.PATROL" @back="onMoveTop" />
   <Training v-else-if="state.currentPage == PAGES.TRAINING" @back="onMoveTop" />
@@ -39,7 +39,7 @@ export default defineComponent({
   },
   setup() {
     const state = reactive({
-      currentPage: PAGES.TOP,
+      currentPage: PAGES.TITLE,
       bgImg: computed(() => `tobehero/${BAGGROUND_IMAGES[state.currentPage]}`),
     });
 
