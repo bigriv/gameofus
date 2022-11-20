@@ -59,6 +59,7 @@ export default defineComponent({
     height: 100%;
     border-color: var(--color);
     background-color: #fff;
+    font-size: 100%;
   }
 }
 </style>

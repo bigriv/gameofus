@@ -79,12 +79,9 @@ export default defineComponent({
   top: 20rem;
   left: 20rem;
   .menu_button {
+    width: 200rem;
     height: 50rem;
-    ::v-deep(.game_button) {
-      button {
-        font-size: 20rem;
-      }
-    }
+    font-size: 20rem;
     + .menu_button {
       margin-top: 10rem;
     }
