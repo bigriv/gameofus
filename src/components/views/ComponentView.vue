@@ -3,6 +3,7 @@
   <GameButton label="ボタン" />
   <MessageFrame :messages="message" />
   <GameCharacterDrawer :unit="character.unit" :character="character" />
+  <GameStatusBar label="体力" :max="100" :current="50" />
 </template>
 
 <script>
@@ -11,6 +12,7 @@ import GameFrame from "/src/components/atoms/GameFrame.vue";
 import GameButton from "/src/components/atoms/GameButton.vue";
 import MessageFrame from "/src/components/atoms/MessageFrame.vue";
 import GameCharacterDrawer from "/src/components/atoms/GameCharacterDrawer.vue";
+import GameStatusBar from "/src/components/atoms/GameStatusBar.vue";
 
 export default defineComponent({
   components: {
@@ -18,7 +20,8 @@ export default defineComponent({
     GameButton,
     MessageFrame,
     GameCharacterDrawer,
-  },
+    GameStatusBar
+},
   setup() {
     const message = ["あいうえお", "123567890", "abcdefg"];
     const character = {
