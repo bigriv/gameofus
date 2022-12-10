@@ -9,6 +9,8 @@
     - npm install @storybook/vue3
   - vue-router インストール
     - npm install vue-router@4
+  - pinia インストール
+    - npm install pinia
 
 - コーディングルール
     - 命名規則
