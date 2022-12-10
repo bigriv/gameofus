@@ -36,6 +36,11 @@ export default defineComponent({
       pos: 0,
       timerId: null,
     });
+
+    const sleep = (func, time) => {
+      setTimeout(func(), time)
+    }
+
     const removeInterval = () => {
       if (typeWriter.timerId) {
         clearInterval(typeWriter.timerId);
@@ -88,6 +93,9 @@ export default defineComponent({
   border-radius: 2rem;
   padding: 2rem;
   font-size: 16rem;
+  font-family: monospace;
+  font-weight: 600;
+  user-select: none;
   .messages {
     width: 100%;
     height: 100%;

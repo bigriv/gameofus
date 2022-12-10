@@ -9,8 +9,7 @@
 </template>
 
 <script>
-import { computed } from "@vue/reactivity";
-import { defineComponent, watch } from "vue";
+import { defineComponent, computed } from "vue";
 import { IMAGE_ROOT_PATH } from "/src/composables/utils/const";
 
 export default defineComponent({
@@ -26,7 +25,7 @@ export default defineComponent({
     },
     bgimg: {
       type: String,
-      default: "vue.svg",
+      default: null,
     },
     bgcolor: {
       type: String,
@@ -48,7 +47,9 @@ export default defineComponent({
         "--height": props.height,
         "--bgcolor": props.bgcolor,
         "--brcolor": props.brcolor,
-        "background-image": `url(${IMAGE_ROOT_PATH + props.bgimg}`,
+        "background-image": props.bgimg
+          ? `url(${IMAGE_ROOT_PATH + props.bgimg}`
+          : "none",
         "--scroll_direction": props.scroll?.direction,
         "--scroll_speed": props.scroll?.speed,
       };

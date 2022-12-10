@@ -47,6 +47,7 @@ export default defineComponent({
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+  white-space: break-spaces;
   .agree_button {
     width: 140rem;
     height: 40rem;

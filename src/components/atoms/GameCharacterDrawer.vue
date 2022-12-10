@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { defineComponent, reactive } from "vue";
+import { defineComponent, computed } from "vue";
 
 export default defineComponent({
   props: {
@@ -47,7 +47,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const drawer = reactive({
+    const drawer = computed(() => ({
       variabe: {
         "--unit": props.unit,
         // head
@@ -91,7 +91,7 @@ export default defineComponent({
         foot: props.character.foot?.other,
         options: props.character.options,
       },
-    });
+    }));
 
     return {
       drawer,
@@ -108,6 +108,7 @@ $IMAGE_PATH: "/src/assets/images";
   height: 100%;
   div {
     position: absolute;
+    margin-top: 2rem;
   }
   @function multiUnit($value) {
     @return calc($value * var(--unit));
@@ -127,17 +128,25 @@ $IMAGE_PATH: "/src/assets/images";
     background-repeat: no-repeat;
     background-size: 100% 50%;
     position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
     &.male_active {
-      bottom: 0;
-      left: 50%;
-      transform: translate(-50%, -50%);
       background-image: url(#{$HAIR_IMAGE_PATH}/hair_male_active.png);
     }
     &.male_square {
-      bottom: 0;
-      left: 50%;
-      transform: translate(-50%, -50%);
       background-image: url(#{$HAIR_IMAGE_PATH}/hair_male_square.png);
+    }
+    &.male_regent {
+      width: 170%;
+      transform: translate(-70%, -50%);
+      background-image: url(#{$HAIR_IMAGE_PATH}/hair_male_square.png);
+    }
+    &.monster_horn {
+      background-image: url(#{$HAIR_IMAGE_PATH}/hair_monster_horn.png);
+    }
+    &.piero_hat {
+      background-image: url(#{$HAIR_IMAGE_PATH}/hair_piero_hat.png);
     }
   }
   .face {
@@ -157,6 +166,12 @@ $IMAGE_PATH: "/src/assets/images";
     }
     &.dandy {
       background-image: url(#{$FACE_IMAGE_PATH}/face_dandy.png);
+    }
+    &.ogre {
+      background-image: url(#{$FACE_IMAGE_PATH}/face_ogre.png);
+    }
+    &.piero {
+      background-image: url(#{$FACE_IMAGE_PATH}/face_piero.png);
     }
   }
   .upper_body {
@@ -182,8 +197,13 @@ $IMAGE_PATH: "/src/assets/images";
     background-color: var(--hand-color);
     top: multiUnit(var(--arm-height));
     left: 0;
-    transform: translateX(-100%);
-    -webkit-box-reflect: right multiUnit(var(--upper_body-width));
+    transform: translateX(
+      calc(-100% - multiUnit(calc(var(--arm-width) - var(--hand-width))) / 2)
+    );
+    -webkit-box-reflect: right
+      multiUnit(
+        calc(var(--upper_body-width) + var(--arm-width) - var(--hand-width))
+      );
   }
   .lower_body {
     width: multiUnit(var(--lower_body-width));

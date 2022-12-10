@@ -8,6 +8,8 @@
 
 <script>
 import { defineComponent } from "vue";
+import AUDIO from "/src/composables/utils/audio";
+import { AUDIO_ROOT_PATH } from "/src/composables/utils/const";
 
 export default defineComponent({
   name: "GameButton",
@@ -15,6 +17,10 @@ export default defineComponent({
     label: {
       type: String,
       default: "",
+    },
+    audio: {
+      type: String,
+      default: AUDIO.BUTTON,
     },
     type: {
       type: String,
@@ -38,7 +44,11 @@ export default defineComponent({
       "--color": props.color,
     };
 
+    const audio = new Audio(AUDIO_ROOT_PATH + props.audio);
+
     const onClick = () => {
+      audio.currentTime = 0;
+      audio.play();
       emit("click");
     };
     return {
@@ -60,6 +70,9 @@ export default defineComponent({
     border-color: var(--color);
     background-color: #fff;
     font-size: 100%;
+    font-family: monospace;
+    font-weight: 600;
+    user-select: none;
   }
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="game_status_bar" :style="styles">
-    <div class="label">{{ label }}</div>
+    <div v-if="label" class="label">{{ label }}</div>
     <div class="bar" />
   </div>
 </template>
