@@ -6,49 +6,75 @@
     <div class="character">
       <img :src="character" />
     </div>
+    <div v-if="modal.isShown" class="message_window">
+      <MessageDialog :message="modal.message" @agree="onAgree" />
+    </div>
   </GameFrame>
 </template>
 
-<script>
-import { defineComponent, onMounted, onBeforeUnmount, reactive } from "vue";
+<script setup>
+import { onMounted, computed, onBeforeUnmount, reactive } from "vue";
 import GameFrame from "/src/components/atoms/GameFrame.vue";
+import MessageDialog from "/src/components/molecules/MessageDialog.vue";
 import { IMAGE_ROOT_PATH } from "/src/composables/utils/const";
+import AUDIO from "/src/composables/utils/audio";
+import { AUDIO_ROOT_PATH } from "/src/composables/utils/const";
 
-export default defineComponent({
-  components: {
-    GameFrame,
-  },
-  emits: ["back"],
-  setup(props, { emit }) {
-    const BACKGROUND_IMAGE = "tobehero/bg_home.png";
-    const character = IMAGE_ROOT_PATH + "tobehero/char_sleep.png";
-
-    const state = reactive({
-      timer: 0,
-      timeoutId: null,
-      intervalId: null,
-    });
-
-    onMounted(() => {
-      state.timeoutId = setTimeout(() => {
-        emit("back");
-      }, 4000);
-      state.intervalId = setInterval(() => {
-        state.timer++;
-      }, 1000);
-    });
-    onBeforeUnmount(() => {
-      clearTimeout(state.timeoutId);
-      clearInterval(state.intervalId);
-    });
-
-    return {
-      BACKGROUND_IMAGE,
-      character,
-      state,
-    };
+const props = defineProps({
+  life: {
+    type: Number,
+    required: true,
   },
 });
+const emit = defineEmits(["update:life", "back"]);
+
+const BACKGROUND_IMAGE = "tobehero/bg_home.png";
+const character = IMAGE_ROOT_PATH + "tobehero/char_sleep.png";
+const POWERUP = new Audio(AUDIO_ROOT_PATH + AUDIO.POWERUP);
+const SLEEP = new Audio(AUDIO_ROOT_PATH + AUDIO.SLEEP);
+
+const state = reactive({
+  timer: 0,
+  timeoutId: null,
+  intervalId: null,
+  life: computed({
+    get: () => props.life,
+    set: (newValue) => emit("update:life", newValue),
+  }),
+});
+const modal = reactive({
+  isShown: false,
+  message: "体力が回復した。",
+});
+
+onMounted(() => {
+  state.timeoutId = setTimeout(() => {
+    if (state.life + 20 < 100) {
+      state.life += 20;
+    } else {
+      state.life = 100;
+    }
+
+    POWERUP.currentTime = 0;
+    POWERUP.play();
+
+    modal.isShown = true;
+    clearTimeout(state.timeoutId);
+    clearInterval(state.intervalId);
+  }, 3900);
+  state.intervalId = setInterval(() => {
+    state.timer++;
+    SLEEP.currentTime = 0;
+    SLEEP.play();
+  }, 1000);
+});
+onBeforeUnmount(() => {
+  clearTimeout(state.timeoutId);
+  clearInterval(state.intervalId);
+});
+const onAgree = () => {
+  emit("back");
+};
 </script>
 
 <style scoped lang="scss">
@@ -70,7 +96,6 @@ export default defineComponent({
   }
   :nth-child(2) {
     font-size: 32rem;
-
     bottom: 50%;
     left: 50%;
   }
@@ -87,5 +112,13 @@ export default defineComponent({
   height: 350rem;
   left: 50%;
   transform: translateX(-50%);
+}
+.message_window {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300rem;
+  height: 150rem;
 }
 </style>
