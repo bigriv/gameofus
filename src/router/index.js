@@ -7,7 +7,12 @@ const routes = [
     children: [
       {
         path: "",
+        redirect: "/to_be_hero"
+      },
+      {
+        path: "test",
         name: "Test",
+        meta: { forDevelop: true },
         component: () => import("/src/components/views/ComponentView.vue"),
       },
       {
@@ -22,6 +27,19 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some((record) => record.meta.forDevelop)) {
+    if (import.meta.env.VITE_ENV !== "product") {
+      next({
+        path: "/",
+      });
+      return;
+    }
+  }
+
+  next();
 });
 
 export default router;
