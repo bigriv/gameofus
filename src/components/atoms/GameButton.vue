@@ -8,8 +8,8 @@
 
 <script>
 import { defineComponent } from "vue";
-import AUDIO from "/src/composables/utils/audio";
-import { AUDIO_ROOT_PATH } from "/src/composables/utils/const";
+import AUDIO from "@/composables/utils/audio";
+import { AUDIO_ROOT_PATH } from "@/composables/utils/const";
 
 export default defineComponent({
   name: "GameButton",

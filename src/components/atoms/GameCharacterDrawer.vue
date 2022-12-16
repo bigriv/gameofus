@@ -101,7 +101,7 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-$IMAGE_PATH: "/src/assets/images";
+$IMAGE_PATH: "/assets/images";
 .character-wrap {
   position: relative;
   width: 100%;

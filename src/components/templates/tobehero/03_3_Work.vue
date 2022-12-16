@@ -121,7 +121,7 @@ export default defineComponent({
   width: 100%;
   height: 100%;
   background-size: 100%;
-  background-image: url("/src/assets/images/tobehero/item/item_helmet.png");
+  background-image: url("/assets/images/tobehero/item/item_helmet.png");
   background-repeat: no-repeat;
 }
 .mandril {
@@ -129,7 +129,7 @@ export default defineComponent({
   top: calc(var(--arm-height) * var(--unit));
   left: 0;
   transform: rotate(-20deg) translate(-50%, -100%);
-  background-image: url("/src/assets/images/tobehero/item/item_mandril.png");
+  background-image: url("/assets/images/tobehero/item/item_mandril.png");
   background-repeat: no-repeat;
   background-size: 150rem;
   width: 150rem;

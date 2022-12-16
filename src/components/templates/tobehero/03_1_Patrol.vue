@@ -264,7 +264,7 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped lang="scss">
-$IMAGE_PATH: "/src/assets/images";
+$IMAGE_PATH: "/assets/images";
 .character {
   position: absolute;
   bottom: 40rem;
